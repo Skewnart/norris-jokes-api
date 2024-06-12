@@ -8,6 +8,12 @@ pub fn add(left: usize, right: usize) {
     println!("{}", test);
 }
 
+pub fn get_random() -> String {
+    let client = reqwest::blocking::Client::new(); 
+
+    "".to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
