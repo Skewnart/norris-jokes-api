@@ -1,16 +1,22 @@
 mod joke;
 mod jokecategory;
+mod norriserror;
+
+use joke::Joke;
+use jokecategory::JokeCategory;
+use norriserror::NorrisError;
+use reqwest::{blocking::Response, Error as ReqwestError};
 
 pub fn get_random() -> Result<Joke, NorrisError> {
     // let test = Joke::new("bmom6jqftpqgokh8adtolw", "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower.");
-
+    
     let response: Result<Response, ReqwestError> = reqwest::blocking::get("https://api.chucknorris.io/jokes/random");
-    let text = match response {
-        Response(res) => text = res,
-        ReqwestError(err) => panic!("{}", NorrisError::from(err));
-    }
+    let content = match response {
+        Ok(response) => response.text(),
+        Err(err) => panic!("{}", NorrisError::RequestError(err))
+    };
+    
 
-    "".to_string()
 }
 
 #[cfg(test)]
