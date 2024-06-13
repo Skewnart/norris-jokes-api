@@ -6,7 +6,11 @@ pub fn get_random() -> Result<Joke, NorrisError> {
     let client = reqwest::blocking::Client::new();
     let url = "https://api.chucknorris.io/jokes/random";
 
-    let response: Result<Response, ReqwestError> = client.get(url).send(); 
+    let response: Result<Response, ReqwestError> = client.get(url).send();
+    let text = match response {
+        Response(res) => text = res,
+        ReqwestError(err) => panic!("{}", NorrisError::from(err));
+    }
 
     "".to_string()
 }
