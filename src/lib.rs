@@ -1,15 +1,12 @@
-mod models;
-use crate::models::joke::*;
+mod joke;
+mod jokecategory;
 
-pub fn add(left: usize, right: usize) {
-    // left + right
+pub fn get_random() -> Result<Joke, NorrisError> {
+    // let test = Joke::new("bmom6jqftpqgokh8adtolw", "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower.");
+    let client = reqwest::blocking::Client::new();
+    let url = "https://api.chucknorris.io/jokes/random";
 
-    let test = Joke::new("bmom6jqftpqgokh8adtolw", "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower.");
-    println!("{}", test);
-}
-
-pub fn get_random() -> String {
-    let client = reqwest::blocking::Client::new(); 
+    let response: Result<Response, ReqwestError> = client.get(url).send(); 
 
     "".to_string()
 }
