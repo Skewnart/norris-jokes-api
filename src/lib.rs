@@ -3,10 +3,8 @@ mod jokecategory;
 mod norriserror;
 
 use joke::Joke;
-use jokecategory::JokeCategory;
 use norriserror::NorrisError;
 use reqwest::{blocking::Response, Error as ReqwestError};
-use serde_json::Error as JsonError;
 
 pub fn get_random() -> Result<Joke, NorrisError> {
     // let test = Joke::new("bmom6jqftpqgokh8adtolw", "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower.");
@@ -15,19 +13,19 @@ pub fn get_random() -> Result<Joke, NorrisError> {
 
     let content = match response {
         Ok(response) => response.text(),
-        Err(err) => return NorrisError::RequestError(err)
+        Err(err) => return Err(NorrisError::RequestError(err))
     };
 
     let text = match content {
         Ok(text) => text,
-        Err(reason) => return NorrisError::RequestError(err)
+        Err(err) => return Err(NorrisError::RequestError(err))
     };
 
     let joke = serde_json::from_str(text.as_str());
 
     match joke {
         Ok(joke) => Ok(joke),
-        Err(err) => return NorrisError::JsonError(err)
+        Err(err) => Err(NorrisError::JsonError(err))
     }
 }
 
@@ -39,5 +37,9 @@ mod tests {
     fn it_works() {
         // let result = add(2, 2);
         // assert_eq!(result, 4);
+        match get_random() {
+            Ok(joke) => println!("{}", joke),
+            Err(err) => panic!("{}", err)
+        }
     }
 }

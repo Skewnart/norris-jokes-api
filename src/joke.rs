@@ -1,8 +1,7 @@
 use std::fmt; 
-// use serde::{Deserialize, Serialize};
-
-// #[derive(Clone, Serialize, Deserialize, Debug)] 
-#[derive(Clone, Debug)] 
+use serde::{Deserialize, Serialize}; 
+ 
+#[derive(Clone, Serialize, Deserialize, Debug)] 
 pub struct Joke {
     pub id: String,
     pub value: String

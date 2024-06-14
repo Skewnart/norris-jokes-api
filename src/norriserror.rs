@@ -4,6 +4,7 @@ use std::error;
 use reqwest::Error as ReqwestError;
 use serde_json::Error as SerdeError;
 
+#[derive(Debug)]
 pub enum NorrisError {
     RequestError(ReqwestError),
     JsonError(SerdeError)
@@ -30,10 +31,3 @@ impl error::Error for NorrisError {
         } 
     }
 }
-
-/*impl From<ReqwestError> for NorrisError {
-    fn from(err: ReqwestError) -> Self { 
-        err.
-    } 
-}
-*/
