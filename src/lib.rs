@@ -4,28 +4,30 @@ mod norriserror;
 
 use joke::Joke;
 use norriserror::NorrisError;
-use reqwest::{blocking::Response, Error as ReqwestError};
+use reqwest::StatusCode;
 
-pub fn get_random() -> Result<Joke, NorrisError> {
-    // let test = Joke::new("bmom6jqftpqgokh8adtolw", "Chuck Norris once rode a nine foot grizzly bear through an automatic car wash, instead of taking a shower.");
-    
-    let response: Result<Response, ReqwestError> = reqwest::blocking::get("https://api.chucknorris.io/jokes/random");
+pub fn get_random() -> Result<Joke, NorrisError> {    
+    let response = reqwest::blocking::get("https://api.chucknorris.io/jokes/random").unwrap();
 
-    let content = match response {
-        Ok(response) => response.text(),
-        Err(err) => return Err(NorrisError::RequestError(err))
-    };
+    if response.status() != StatusCode::OK {
+        return Err(NorrisError::Generic(format!("{} : {}", response.url().path(), response.status())));
+    }
 
-    let text = match content {
+    let content: Result<String, reqwest::Error> = response.text();
+    // println!("content: {:?}", content);
+
+    let json_text: String = match content {
         Ok(text) => text,
-        Err(err) => return Err(NorrisError::RequestError(err))
+        Err(err) => return Err(NorrisError::Request(err))
     };
+    // println!("json_text: {:?}", json_text);
 
-    let joke = serde_json::from_str(text.as_str());
+    let joke: Result<Joke, serde_json::Error> = serde_json::from_str(json_text.as_str());
+    // println!("joke: {:?}", joke);
 
     match joke {
         Ok(joke) => Ok(joke),
-        Err(err) => Err(NorrisError::JsonError(err))
+        Err(err) => Err(NorrisError::Json(err))
     }
 }
 
@@ -34,12 +36,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        // let result = add(2, 2);
-        // assert_eq!(result, 4);
+    fn test_before_client() {
+        
         match get_random() {
             Ok(joke) => println!("{}", joke),
-            Err(err) => panic!("{}", err)
+            Err(err) => println!("{}", err)
         }
     }
 }

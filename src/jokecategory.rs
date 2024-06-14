@@ -11,8 +11,8 @@ impl fmt::Display for JokeCategory {
     } 
 }
 
-impl JokeCategory {
-    pub fn to_request(&self) -> String {
-        self.to_string().to_lowercase()
-    }
-}
+// impl JokeCategory {
+//     pub fn to_request(&self) -> String {
+//         self.to_string().to_lowercase()
+//     }
+// }

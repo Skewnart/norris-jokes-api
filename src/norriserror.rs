@@ -6,8 +6,9 @@ use serde_json::Error as SerdeError;
 
 #[derive(Debug)]
 pub enum NorrisError {
-    RequestError(ReqwestError),
-    JsonError(SerdeError)
+    Request(ReqwestError),
+    Json(SerdeError),
+    Generic(String)
 }
 
 impl fmt::Display for NorrisError { 
@@ -15,8 +16,9 @@ impl fmt::Display for NorrisError {
         use NorrisError::*; 
  
         match self { 
-            RequestError(err) => err.fmt(f),
-            JsonError(err) => err.fmt(f),
+            Request(err) => err.fmt(f),
+            Json(err) => err.fmt(f),
+            Generic(err) => write!(f, "{}", err) 
         } 
     } 
 }
@@ -26,8 +28,9 @@ impl error::Error for NorrisError {
         use NorrisError::*;
 
         match self { 
-            RequestError(_) => "Erreur de requête",
-            JsonError(_) => "Erreur de parsing JSON",
+            Request(_) => "Erreur de requête",
+            Json(_) => "Erreur de parsing JSON",
+            Generic(_) => "Erreur"
         } 
     }
 }
