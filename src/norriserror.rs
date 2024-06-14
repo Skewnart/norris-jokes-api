@@ -1,9 +1,12 @@
 use std::fmt;
+use std::error;
 
 use reqwest::Error as ReqwestError;
+use serde_json::Error as SerdeError;
 
 pub enum NorrisError {
-    RequestError(ReqwestError)
+    RequestError(ReqwestError),
+    JsonError(SerdeError)
 }
 
 impl fmt::Display for NorrisError { 
@@ -12,9 +15,21 @@ impl fmt::Display for NorrisError {
  
         match self { 
             RequestError(err) => err.fmt(f),
+            JsonError(err) => err.fmt(f),
         } 
     } 
-} 
+}
+
+impl error::Error for NorrisError {
+    fn description(&self) -> &str {
+        use NorrisError::*;
+
+        match self { 
+            RequestError(_) => "Erreur de requête",
+            JsonError(_) => "Erreur de parsing JSON",
+        } 
+    }
+}
 
 /*impl From<ReqwestError> for NorrisError {
     fn from(err: ReqwestError) -> Self { 
