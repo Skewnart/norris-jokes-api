@@ -18,7 +18,7 @@ impl RequestClient {
     }
     
     pub fn retrieve_response_sync(mut self, path: &str) -> Self {
-        self.response = Some(reqwest::blocking::get(self.url.clone() + path).unwrap());
+        self.response = Some(reqwest::blocking::get(format!("{}{}", self.url, path)).unwrap());
         self
     }
 
