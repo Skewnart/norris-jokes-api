@@ -4,12 +4,12 @@ use serde::Deserialize;
 
 use crate::norriserror::NorrisError;
 
-pub struct RequestClient {
+pub struct Requestor {
     url: String,
     response: Option<Response>
 }
 
-impl RequestClient {
+impl Requestor {
     pub fn new() -> Self {
         Self {
             url: "https://api.chucknorris.io/jokes".to_string(),
@@ -22,7 +22,7 @@ impl RequestClient {
         self
     }
 
-    pub fn parse_it<T>(self) -> Result<T, NorrisError> 
+    pub fn parse_it_to<T>(self) -> Result<T, NorrisError> 
         where T: for<'a> Deserialize<'a>{
         let response = match self.response {
             Some(x) => x,
