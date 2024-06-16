@@ -32,25 +32,28 @@ mod tests {
 
     #[test]
     fn test_random() {
-        match get_random() {
-            Ok(joke) => println!("{}", joke),
-            Err(err) => println!("{}", err)
-        }
+        assert!(get_random().is_ok());
     }
 
     #[test]
     fn test_random_with_category() {
-        match get_random_with_category(JokeCategory::Food) {
-            Ok(joke) => println!("{}", joke),
-            Err(err) => println!("{}", err)
-        }
+        assert!(get_random_with_category(JokeCategory::Sport).is_ok());
     }
 
     #[test]
     fn test_with_query() {
-        match get_with_query("test") {
-            Ok(res) => println!("{:?}", res),
-            Err(err) => println!("{}", err)
+        let mut jokes = get_with_query("forsureitdoesnotexist");
+        assert!(jokes.is_ok());
+
+        if let Ok(res) = jokes {
+            assert_eq!(res.total, 0);
+        }
+
+        jokes = get_with_query("sport");
+        assert!(jokes.is_ok());
+
+        if let Ok(res) = jokes {
+            assert!(res.total > 0);
         }
     }
 }

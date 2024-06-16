@@ -1,5 +1,4 @@
 use std::fmt;
-use std::error;
 
 use reqwest::Error as ReqwestError;
 use serde_json::Error as SerdeError;
@@ -21,16 +20,4 @@ impl fmt::Display for NorrisError {
             Generic(err) => write!(f, "{}", err) 
         } 
     } 
-}
-
-impl error::Error for NorrisError {
-    fn description(&self) -> &str {
-        use NorrisError::*;
-
-        match self { 
-            Request(_) => "Erreur de requête",
-            Json(_) => "Erreur de parsing JSON",
-            Generic(_) => "Erreur"
-        } 
-    }
 }
