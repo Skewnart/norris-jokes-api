@@ -42,11 +42,10 @@ impl Requestor {
         };
         // println!("json_text: {:?}", json_text);
     
-        let joke: Result<T, serde_json::Error> = serde_json::from_str(json_text.as_str());
-        // println!("joke: {:?}", joke);
+        let result: Result<T, serde_json::Error> = serde_json::from_str(json_text.as_str());
     
-        match joke {
-            Ok(joke) => Ok(joke),
+        match result {
+            Ok(result) => Ok(result),
             Err(err) => Err(NorrisError::Json(err))
         }
     }

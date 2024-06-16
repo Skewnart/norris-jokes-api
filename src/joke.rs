@@ -1,7 +1,7 @@
 use std::fmt; 
-use serde::{Deserialize, Serialize}; 
+use serde::Deserialize; 
  
-#[derive(Clone, Serialize, Deserialize, Debug)] 
+#[derive(Deserialize, Debug)] 
 pub struct Joke {
     pub id: String,
     pub value: String
@@ -20,4 +20,10 @@ impl fmt::Display for Joke {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { 
         write!(f, "{:?}", self) 
     } 
+}
+
+#[derive(Deserialize, Debug)] 
+pub struct MultiJokes {
+    pub total: i32,
+    pub result: Vec<Joke>
 }
