@@ -32,28 +32,37 @@ mod tests {
 
     #[test]
     fn test_random() {
-        assert!(get_random().is_ok());
+        let result_joke = get_random();
+
+        match result_joke {
+            Ok(joke) => assert!(!joke.value.is_empty()),
+            Err(err) => panic!("{:?}", err)
+        }
     }
 
     #[test]
     fn test_random_with_category() {
-        assert!(get_random_with_category(JokeCategory::Sport).is_ok());
+        
+        let result_joke = get_random_with_category(JokeCategory::Sport);
+
+        match result_joke {
+            Ok(joke) => assert!(!joke.value.is_empty()),
+            Err(err) => panic!("{:?}", err)
+        }
     }
 
     #[test]
     fn test_with_query() {
-        let mut jokes = get_with_query("forsureitdoesnotexist");
-        assert!(jokes.is_ok());
-
-        if let Ok(res) = jokes {
-            assert_eq!(res.total, 0);
+        let mut result_jokes = get_with_query("forsureitdoesnotexist");
+        match result_jokes {
+            Ok(jokes) => assert!(jokes.total == 0),
+            Err(err) => panic!("{:?}", err)
         }
 
-        jokes = get_with_query("sport");
-        assert!(jokes.is_ok());
-
-        if let Ok(res) = jokes {
-            assert!(res.total > 0);
+        result_jokes = get_with_query("sport");
+        match result_jokes {
+            Ok(jokes) => assert!(jokes.total > 0),
+            Err(err) => panic!("{:?}", err)
         }
     }
 }

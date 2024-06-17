@@ -18,15 +18,18 @@ impl Requestor {
     }
     
     pub fn retrieve_response_sync(mut self, path: &str) -> Self {
-        self.response = Some(reqwest::blocking::get(format!("{}{}", self.url, path)).unwrap());
+        if let Ok(resp) = reqwest::blocking::get(format!("{}{}", self.url, path)) {
+            self.response = Some(resp);    
+        }
         self
     }
 
     pub fn parse_it_to<T>(self) -> Result<T, NorrisError> 
         where T: for<'a> Deserialize<'a>{
+
         let response = match self.response {
             Some(x) => x,
-            None => return Err(NorrisError::Generic("Reponse not loaded yet.".to_string()))
+            None => return Err(NorrisError::Generic("Reponse has not been loaded. Maybe api is not available ?...".to_string()))
         };
 
         if response.status() != StatusCode::OK {
