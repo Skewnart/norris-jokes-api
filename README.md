@@ -18,3 +18,8 @@ fn main() {
     println!("{:?}", result_list);
 }
 ```
+
+## What's next ?
+
+As soon as the Norris API come back (currently down), I code the async versions of functions.
+If it's up but no async functions in the project, [tell me](https://github.com/Skewnart/norris-jokes-api/issues), maybe I don't know it, thanks.
