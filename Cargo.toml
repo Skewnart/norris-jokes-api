@@ -2,6 +2,14 @@
 name = "norris-jokes"
 version = "0.1.0"
 edition = "2021"
+description = "Chuck Norris jokes fetcher library for Rust applications"
+license = "MIT OR Apache-2.0"
+keywords = ["norris", "chuck", "api"]
+categories = ["api-bindings"]
+readme = "README.md"
+authors = ["Skewnart"]
+repository = "https://github.com/skewnart/norris-jokes-api" 
+homepage = "https://github.com/skewnart/norris-jokes-api"
 
 [dependencies]
 reqwest = { version = "0.12.4", features = ["blocking"] }
