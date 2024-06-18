@@ -1,4 +1,4 @@
-# Norris Jokes API
+# Norris Jokes API  ([crates.io](https://crates.io/crates/norris-jokes))
 
 [Chuck Norris jokes API](https://api.chucknorris.io/) sync fetcher library for Rust applications
 
