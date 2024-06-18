@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 pub mod joke;
 pub mod jokecategory;
 pub mod norriserror;

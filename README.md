@@ -4,15 +4,6 @@
 
 ## Usage
 
-Cargo.toml
-
-```
-[dependencies]
-norris-jokes = "0.1.0"
-```
-
-main.rs
-
 ```rust
 use norris_jokes::jokecategory::JokeCategory;
 
