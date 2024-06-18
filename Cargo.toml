@@ -1,8 +1,8 @@
 [package]
 name = "norris-jokes"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-description = "Chuck Norris jokes fetcher library for Rust applications"
+description = "Chuck Norris jokes API sync fetcher library for Rust applications"
 license = "MIT OR Apache-2.0"
 keywords = ["norris", "chuck", "api"]
 categories = ["api-bindings"]
