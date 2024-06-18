@@ -1,6 +1,6 @@
-mod joke;
-mod jokecategory;
-mod norriserror;
+pub mod joke;
+pub mod jokecategory;
+pub mod norriserror;
 mod requestor;
 
 use requestor::Requestor;
