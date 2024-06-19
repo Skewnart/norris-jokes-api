@@ -36,6 +36,22 @@ pub async fn get_random_async() -> Result<Joke, NorrisError> {
         .await
 }
 
+pub async fn get_random_with_category_async(category: JokeCategory) -> Result<Joke, NorrisError> {
+    requestor_async::Requestor::new()
+        .retrieve_response(format!("/random?category={}", category).as_str())
+        .await
+        .parse_it_to::<Joke>()
+        .await
+}
+
+pub async fn get_with_query_async(query: &str) -> Result<MultiJokes, NorrisError> {
+    requestor_async::Requestor::new()
+        .retrieve_response(format!("/search?query={}", query).as_str())
+        .await
+        .parse_it_to::<MultiJokes>()
+        .await
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -103,6 +119,44 @@ mod tests {
 
         // if let Ok(joke) = result_joke {
         //     assert!(!joke.value.is_empty())
+        // }
+    }
+
+    #[tokio::test]
+    async fn test_random_with_category_async() {
+        
+        let result_joke = get_random_with_category_async(JokeCategory::Sport).await;
+
+        match result_joke {
+            Ok(joke) => assert!(!joke.value.is_empty()),
+            Err(err) => panic!("{:?}", err)
+        }
+
+        // if let Ok(joke) = result_joke {
+        //     assert!(!joke.value.is_empty())
+        // }
+    }
+
+    #[tokio::test]
+    async fn test_with_query_async() {
+        let mut result_jokes = get_with_query_async("forsureitdoesnotexist").await;
+        match result_jokes {
+            Ok(jokes) => assert!(jokes.total == 0),
+            Err(err) => panic!("{:?}", err)
+        }
+
+        // if let Ok(jokes) = result_jokes {
+        //     assert!(jokes.total == 0);
+        // }
+
+        result_jokes = get_with_query_async("sport").await;
+        match result_jokes {
+            Ok(jokes) => assert!(jokes.total > 0),
+            Err(err) => panic!("{:?}", err)
+        }
+
+        // if let Ok(multi) = result_jokes {
+        //     assert!(multi.total > 0);
         // }
     }
 }
