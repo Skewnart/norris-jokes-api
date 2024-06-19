@@ -1,8 +1,10 @@
-# Norris Jokes API  ([crates.io](https://crates.io/crates/norris-jokes))
+# Norris Jokes API
 
 [Chuck Norris jokes API](https://api.chucknorris.io/) sync fetcher library for Rust applications
 
 ## Usage
+
+### Usage for synchronous calls
 
 ```rust
 use norris_jokes::jokecategory::JokeCategory;
@@ -19,7 +21,23 @@ fn main() {
 }
 ```
 
-## What's next ?
+### Usage for asynchronous calls
 
-As soon as the Norris API come back (currently down), I code the async versions of functions.
-If it's up but no async functions in the project, [tell me](https://github.com/Skewnart/norris-jokes-api/issues), maybe I don't know it, thanks.
+```rust
+use norris_jokes::jokecategory::JokeCategory;
+use std::error::Error;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let mut joke = norris_jokes::get_random_async().await;
+    println!("{:?}", joke);
+    
+    joke = norris_jokes::get_random_with_category_async(JokeCategory::Sport).await;
+    println!("{:?}", joke);
+    
+    let result_list = norris_jokes::get_with_query_async("sport").await;
+    println!("{:?}", result_list);
+
+    Ok(())
+}
+```
