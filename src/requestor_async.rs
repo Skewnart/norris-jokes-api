@@ -1,5 +1,5 @@
 
-use reqwest::{blocking::Response, StatusCode};
+use reqwest::{Response, StatusCode};
 use serde::Deserialize;
 
 use crate::norriserror::NorrisError;
@@ -17,14 +17,14 @@ impl Requestor {
         }
     }
     
-    pub fn retrieve_response(mut self, path: &str) -> Self {
-        if let Ok(resp) = reqwest::blocking::get(format!("{}{}", self.url, path)) {
+    pub async fn retrieve_response(mut self, path: &str) -> Self {
+        if let Ok(resp) = reqwest::get(format!("{}{}", self.url, path)).await {
             self.response = Some(resp);    
         }
         self
     }
 
-    pub fn parse_it_to<T>(self) -> Result<T, NorrisError> 
+    pub async fn parse_it_to<T>(self) -> Result<T, NorrisError> 
         where T: for<'a> Deserialize<'a>{
 
         let response = match self.response {
@@ -36,7 +36,7 @@ impl Requestor {
             return Err(NorrisError::Generic(format!("{} : {}", response.url().path(), response.status())));
         }
     
-        let content: Result<String, reqwest::Error> = response.text();
+        let content: Result<String, reqwest::Error> = response.text().await;
         // println!("content: {:?}", content);
     
         let json_text: String = match content {

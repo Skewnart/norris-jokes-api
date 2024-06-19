@@ -4,28 +4,36 @@ pub mod joke;
 pub mod jokecategory;
 pub mod norriserror;
 mod requestor;
+mod requestor_async;
 
-use requestor::Requestor;
 use joke::{Joke, MultiJokes};
 use jokecategory::JokeCategory;
 use norriserror::NorrisError;
 
 pub fn get_random() -> Result<Joke, NorrisError> {
-    Requestor::new()
-        .retrieve_response_sync("/random")
+    requestor::Requestor::new()
+        .retrieve_response("/random")
         .parse_it_to::<Joke>()
 }
 
 pub fn get_random_with_category(category: JokeCategory) -> Result<Joke, NorrisError> {
-    Requestor::new()
-        .retrieve_response_sync(format!("/random?category={}", category).as_str())
+    requestor::Requestor::new()
+        .retrieve_response(format!("/random?category={}", category).as_str())
         .parse_it_to::<Joke>()
 }
 
 pub fn get_with_query(query: &str) -> Result<MultiJokes, NorrisError> {
-    Requestor::new()
-        .retrieve_response_sync(format!("/search?query={}", query).as_str())
+    requestor::Requestor::new()
+        .retrieve_response(format!("/search?query={}", query).as_str())
         .parse_it_to::<MultiJokes>()
+}
+
+pub async fn get_random_async() -> Result<Joke, NorrisError> {
+    requestor_async::Requestor::new()
+        .retrieve_response("/random")
+        .await
+        .parse_it_to::<Joke>()
+        .await
 }
 
 #[cfg(test)]
