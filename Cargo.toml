@@ -1,6 +1,6 @@
 [package]
 name = "norris-jokes"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2021"
 description = "Chuck Norris jokes API sync & async fetcher library for Rust applications"
 license = "MIT OR Apache-2.0"

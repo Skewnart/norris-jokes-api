@@ -1,6 +1,6 @@
 # Norris Jokes API
 
-[Chuck Norris jokes API](https://api.chucknorris.io/) sync fetcher library for Rust applications
+[Chuck Norris jokes API](https://api.chucknorris.io/) sync & async fetcher library for Rust applications
 
 ## Usage
 
