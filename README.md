@@ -1,11 +1,11 @@
 # Norris Jokes API
 
-[![latest version](https://img.shields.io/crates/v/norris-jokes.svg?style=flat-square)](https://crates.io/crates/norris-jokes)
-[![build status](https://img.shields.io/github/actions/workflow/status/skewnart/norris-jokes-api/ci.yml?style=flat-square)](https://github.com/Skewnart/norris-jokes-api/actions)
+[![latest version](https://img.shields.io/crates/v/norris-jokes.svg)](https://crates.io/crates/norris-jokes)
+[![build status](https://img.shields.io/github/actions/workflow/status/skewnart/norris-jokes-api/ci.yml)](https://github.com/Skewnart/norris-jokes-api/actions)
 [![dependency status](https://deps.rs/repo/github/skewnart/norris-jokes-api/status.svg)](https://deps.rs/repo/github/skewnart/norris-jokes-api)
-[![downloads](https://img.shields.io/crates/d/norris-jokes.svg?style=flat-square)](https://crates.io/crates/norris-jokes)
-[![docs](https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square)](https://docs.rs/norris-jokes)
-![license](https://img.shields.io/crates/l/norris-jokes.svg?style=flat-square)
+[![downloads](https://img.shields.io/crates/d/norris-jokes.svg)](https://crates.io/crates/norris-jokes)
+[![docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://docs.rs/norris-jokes)
+![license](https://img.shields.io/crates/l/norris-jokes.svg)
 
 [Chuck Norris jokes API](https://api.chucknorris.io/) sync & async fetcher library for Rust applications
 
